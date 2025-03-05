@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "elytra-tweaks",
+	"version": "${version}",
+	"name": "Elytra Tweaks",
+	"description": "A simple mod that allows you to fly elytra quickly and safely)",
+	"authors": [
+		"Sakred_"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/elytra-tweaks",
+		"sources": "https://github.com/SakredBara/elytra-tweaks"
+	},
+	"license": "MIT",
+	"icon": "assets/elytra-tweaks/icon.jpg",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.sakred.elytratweaks.ElytraTweaks"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": ">=1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
