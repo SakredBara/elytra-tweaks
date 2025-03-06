@@ -9,10 +9,11 @@
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/mod/elytra-tweaks",
+		"issues": "https://github.com/SakredBara/elytra-tweaks/issues",
 		"sources": "https://github.com/SakredBara/elytra-tweaks"
 	},
 	"license": "MIT",
-	"icon": "assets/elytra-tweaks/icon.jpg",
+	"icon": "assets/elytra-tweaks/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [

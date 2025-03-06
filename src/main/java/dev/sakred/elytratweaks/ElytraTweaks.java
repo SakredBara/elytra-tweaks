@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
@@ -28,6 +29,8 @@ public class ElytraTweaks implements ModInitializer {
 					if (!chestStack.isOf(Items.ELYTRA)) {
 						equipElytra(player);
 					}
+				} else {
+					equipFirstChestplate(player);
 				}
 
 				if (chestStack.isOf(Items.ELYTRA)) {
@@ -43,10 +46,6 @@ public class ElytraTweaks implements ModInitializer {
 						lastReportedDurability.put(player.getUuid(), remainingDurability);
 					}
 				}
-
-				if (player.isOnGround()) {
-					equipFirstChestplate(player);
-				}
 			}
 		});
 	}
@@ -54,21 +53,20 @@ public class ElytraTweaks implements ModInitializer {
 	private void equipElytra(PlayerEntity player) {
 		for (int i = 0; i < player.getInventory().size(); i++) {
 			ItemStack stack = player.getInventory().getStack(i);
-			if (stack.isOf(Items.ELYTRA)) {
+
+			if (stack.isOf(Items.ELYTRA) && stack.getDamage() < stack.getMaxDamage() - 1) {
 				ItemStack currentChestplate = player.getEquippedStack(EquipmentSlot.CHEST);
 
 				if (!currentChestplate.isEmpty()) {
-					boolean placed = false;
 					for (int j = 0; j < player.getInventory().size(); j++) {
-						ItemStack invStack = player.getInventory().getStack(j);
-						if (invStack.isEmpty()) {
+						if (player.getInventory().getStack(j).isEmpty()) {
 							player.getInventory().setStack(j, currentChestplate.copy());
-							placed = true;
 							break;
 						}
 					}
 				}
 
+				// Заменяем элитры на выбранные только если они не повреждены
 				player.getInventory().removeStack(i);
 				player.equipStack(EquipmentSlot.CHEST, stack);
 				break;
@@ -76,23 +74,22 @@ public class ElytraTweaks implements ModInitializer {
 		}
 	}
 
+
 	private void equipFirstChestplate(PlayerEntity player) {
 		ItemStack chestStack = player.getEquippedStack(EquipmentSlot.CHEST);
-		if (chestStack.isOf(Items.ELYTRA)) {
+		if (!chestStack.isOf(Items.ELYTRA)) {
 			return;
 		}
 
 		for (int i = 0; i < player.getInventory().size(); i++) {
 			ItemStack stack = player.getInventory().getStack(i);
-			if (stack.isOf(Items.IRON_CHESTPLATE) || stack.isOf(Items.DIAMOND_CHESTPLATE) || stack.isOf(Items.GOLDEN_CHESTPLATE)) {
-				ItemStack currentChestplate = player.getEquippedStack(EquipmentSlot.CHEST);
+			if (stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlotType() == EquipmentSlot.CHEST) {
 				player.getInventory().removeStack(i);
 				player.equipStack(EquipmentSlot.CHEST, stack);
 
 				for (int j = 0; j < player.getInventory().size(); j++) {
-					ItemStack invStack = player.getInventory().getStack(j);
-					if (invStack.isEmpty()) {
-						player.getInventory().setStack(j, currentChestplate);
+					if (player.getInventory().getStack(j).isEmpty()) {
+						player.getInventory().setStack(j, chestStack);
 						break;
 					}
 				}
@@ -102,18 +99,13 @@ public class ElytraTweaks implements ModInitializer {
 	}
 
 	private void displayLowDurabilityWarning(PlayerEntity player, int remainingDurability, Formatting color) {
-		String message = "Remaining Elytra Durability: " + remainingDurability;
-		player.sendMessage(Text.literal(message).formatted(color), true);
+		player.sendMessage(Text.literal("Remaining Elytra Durability: " + remainingDurability).formatted(color), true);
 	}
 
 	private Formatting getDurabilityColor(int remainingDurability) {
-		if (remainingDurability <= 5) {
-			return Formatting.RED;
-		} else if (remainingDurability <= 10) {
-			return Formatting.GOLD;
-		} else if (remainingDurability <= 20) {
-			return Formatting.YELLOW;
-		}
+		if (remainingDurability <= 5) return Formatting.RED;
+		if (remainingDurability <= 10) return Formatting.GOLD;
+		if (remainingDurability <= 20) return Formatting.YELLOW;
 		return Formatting.WHITE;
 	}
 }
