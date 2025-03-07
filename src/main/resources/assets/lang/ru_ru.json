@@ -1,0 +1,12 @@
+{
+  "elytra_tweaks.config.title": "Elytra Tweaks v1.1.0+1.21",
+  "elytra_tweaks.config.category.general": "Основные",
+  "elytra_tweaks.config.option.mod_enabled": "Включить Elytra Tweaks?",
+  "elytra_tweaks.config.option.mod_enabled.description": "Полностью включает или отключает мод",
+  "elytra_tweaks.config.group.functionality_settings": "Настройки функционала",
+  "elytra_tweaks.config.option.elytra_swap": "Замена элитр",
+  "elytra_tweaks.config.option.elytra_swap.description": "Автоматически заменяет нагрудник на элитры, когда вы летите, и элитры на нагрудник, когда приземляетесь.",
+  "elytra_tweaks.config.option.low_durability_warnings": "Предупреждения о низкой прочности",
+  "elytra_tweaks.config.option.low_durability_warnings.description": "Показывает предупреждения, когда прочность элитр становится низкой.",
+  "elytra_tweaks.warning.low_durability": "Оставшаяся прочность элитр: %d"
+}
