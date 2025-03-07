@@ -98,7 +98,7 @@ public class ElytraTweaks implements ModInitializer {
 
 		for (int i = 0; i < player.getInventory().size(); i++) {
 			ItemStack stack = player.getInventory().getStack(i);
-			if (stack.getItem() instanceof ArmorItem armorItem && armorItem.getSlotType() == EquipmentSlot.CHEST) {
+			if (stack.getItem() instanceof ArmorItem armorItem && isChestplate(armorItem)) {
 				player.getInventory().removeStack(i);
 				player.equipStack(EquipmentSlot.CHEST, stack);
 
@@ -111,6 +111,13 @@ public class ElytraTweaks implements ModInitializer {
 				break;
 			}
 		}
+	}
+	private boolean isChestplate(ArmorItem armorItem) {
+		return armorItem == Items.NETHERITE_CHESTPLATE ||
+				armorItem == Items.DIAMOND_CHESTPLATE ||
+				armorItem == Items.IRON_CHESTPLATE ||
+				armorItem == Items.GOLDEN_CHESTPLATE ||
+				armorItem == Items.LEATHER_CHESTPLATE;
 	}
 
 	private void displayLowDurabilityWarning(PlayerEntity player, int remainingDurability, Formatting color) {
