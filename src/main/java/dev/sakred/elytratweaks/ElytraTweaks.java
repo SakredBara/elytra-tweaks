@@ -1,5 +1,6 @@
 package dev.sakred.elytratweaks;
 
+import dev.sakred.elytratweaks.config.ElytraTweaksConfigManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.EquipmentSlot;
@@ -20,20 +21,36 @@ public class ElytraTweaks implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ElytraTweaksConfigManager.loadConfig();
+
 		ServerTickEvents.END_WORLD_TICK.register(world -> {
 			for (PlayerEntity player : world.getPlayers()) {
 				if (player.isSpectator() || player.isCreative()) continue;
 
 				ItemStack chestStack = player.getEquippedStack(EquipmentSlot.CHEST);
-				if (!player.isOnGround() && !player.isTouchingWater()) {
-					if (!chestStack.isOf(Items.ELYTRA)) {
-						equipElytra(player);
-					}
-				} else {
-					equipFirstChestplate(player);
+
+				if (!ElytraTweaksConfigManager.config.modEnabled) {
+					return;
 				}
 
-				if (chestStack.isOf(Items.ELYTRA)) {
+				if (ElytraTweaksConfigManager.config.enableElytraSwapOnMace && player.getMainHandStack().isOf(Items.MACE)) {
+					if (chestStack.isOf(Items.ELYTRA)) {
+						equipFirstChestplate(player);
+					}
+					continue;
+				}
+
+				if (ElytraTweaksConfigManager.config.enableElytraSwap) {
+					if (!player.isOnGround() && !player.isTouchingWater()) {
+						if (!chestStack.isOf(Items.ELYTRA)) {
+							equipElytra(player);
+						}
+					} else {
+						equipFirstChestplate(player);
+					}
+				}
+
+				if (ElytraTweaksConfigManager.config.enableLowDurabilityWarning && chestStack.isOf(Items.ELYTRA)) {
 					int damage = chestStack.getDamage();
 					int maxDurability = chestStack.getMaxDamage();
 					int remainingDurability = maxDurability - damage;
@@ -66,14 +83,12 @@ public class ElytraTweaks implements ModInitializer {
 					}
 				}
 
-				// Заменяем элитры на выбранные только если они не повреждены
 				player.getInventory().removeStack(i);
 				player.equipStack(EquipmentSlot.CHEST, stack);
 				break;
 			}
 		}
 	}
-
 
 	private void equipFirstChestplate(PlayerEntity player) {
 		ItemStack chestStack = player.getEquippedStack(EquipmentSlot.CHEST);

@@ -1,0 +1,12 @@
+{
+  "elytra_tweaks.config.title": "Elytra Tweaks v1.1.0+1.21",
+  "elytra_tweaks.config.category.general": "General",
+  "elytra_tweaks.config.option.mod_enabled": "Should Elytra Tweaks be enabled?",
+  "elytra_tweaks.config.option.mod_enabled.description": "Fully enables or disables the mod",
+  "elytra_tweaks.config.group.functionality_settings": "Functionality settings",
+  "elytra_tweaks.config.option.elytra_swap": "Elytra Swap",
+  "elytra_tweaks.config.option.elytra_swap.description": "Automatically replaces chestplate with elytra when you fly and elytra with chestplate when you land.",
+  "elytra_tweaks.config.option.low_durability_warnings": "Low durability warnings",
+  "elytra_tweaks.config.option.low_durability_warnings.description": "Shows warnings when elytra durability becomes low.",
+  "elytra_tweaks.warning.low_durability": "Remaining Elytra Durability: %d"
+}
