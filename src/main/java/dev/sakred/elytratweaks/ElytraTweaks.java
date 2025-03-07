@@ -33,13 +33,6 @@ public class ElytraTweaks implements ModInitializer {
 					return;
 				}
 
-				if (ElytraTweaksConfigManager.config.enableElytraSwapOnMace && player.getMainHandStack().isOf(Items.MACE)) {
-					if (chestStack.isOf(Items.ELYTRA)) {
-						equipFirstChestplate(player);
-					}
-					continue;
-				}
-
 				if (ElytraTweaksConfigManager.config.enableElytraSwap) {
 					if (!player.isOnGround() && !player.isTouchingWater()) {
 						if (!chestStack.isOf(Items.ELYTRA)) {
