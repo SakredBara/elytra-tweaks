@@ -12,7 +12,7 @@
 		"issues": "https://github.com/SakredBara/elytra-tweaks/issues",
 		"sources": "https://github.com/SakredBara/elytra-tweaks"
 	},
-	"license": "MIT",
+	"license": "GPL-3.0-only",
 	"icon": "assets/elytra-tweaks/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -25,7 +25,7 @@
 	},
 	"depends": {
 		"fabricloader": ">=0.15.0",
-		"minecraft": ">=1.21<=1.21.1",
+		"minecraft": ">=1.21.2 <=1.21.4",
 		"java": ">=21",
 		"fabric-api": "*"
 	}
